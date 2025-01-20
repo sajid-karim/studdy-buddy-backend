@@ -177,6 +177,7 @@ Please structure the test clearly with:
         current_section = "questions"  # Can be "questions" or "answer_key"
         
         lines = content.split('\n')
+        test_id = f"test_{uuid.uuid4().hex[:8]}"  # Generate test ID once
         
         for line in lines:
             line = line.strip()
@@ -197,9 +198,9 @@ Please structure the test clearly with:
                 if line[0].isdigit() and line[1] == '.':
                     if current_question:
                         questions.append(current_question)
-                    
+                    question_number = len(questions) + 1
                     current_question = Question(
-                        id=str(len(questions) + 1),
+                        id=f"{test_id}_q{question_number}",
                         question=line[2:].strip(),
                         type=config.questionType,
                         topic="",
